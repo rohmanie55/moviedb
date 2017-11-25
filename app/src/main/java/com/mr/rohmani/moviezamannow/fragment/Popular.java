@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 
 import com.mr.rohmani.moviezamannow.ApiClient;
 import com.mr.rohmani.moviezamannow.Constants;
-import com.mr.rohmani.moviezamannow.MovieAdapter;
-import com.mr.rohmani.moviezamannow.MyMovie;
+import com.mr.rohmani.moviezamannow.adapter.MovieAdapter;
+import com.mr.rohmani.moviezamannow.models.MyMovie;
 import com.mr.rohmani.moviezamannow.R;
 
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ import retrofit2.Response;
  * Created by USER on 18/11/2017.
  */
 
-public class Home extends Fragment {
+public class Popular extends Fragment {
 
     RecyclerView recyclerView;
 
@@ -40,7 +40,6 @@ public class Home extends Fragment {
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycle);
 
-
         listData();
 
         return rootView;
@@ -48,7 +47,7 @@ public class Home extends Fragment {
 
     private void listData() {
         apiClient = new ApiClient();
-        Call<MyMovie> call = apiClient.getApiInterface().getMovieList(Constants.API_KEY);
+        Call<MyMovie> call = apiClient.getApiInterface().getMoviePopular(Constants.API_KEY);
         call.enqueue(new Callback<MyMovie>() {
             @Override
             public void onResponse(Call<MyMovie> call, Response<MyMovie> response) {

@@ -1,4 +1,4 @@
-package com.mr.rohmani.moviezamannow;
+package com.mr.rohmani.moviezamannow.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+
+import com.mr.rohmani.moviezamannow.DetailMovie;
+import com.mr.rohmani.moviezamannow.R;
+import com.mr.rohmani.moviezamannow.models.MyMovie;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -56,12 +60,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, DetailMovie.class);
                 intent.putExtra("id", movieList.get(position).id);
-                intent.putExtra("title", movieList.get(position).title);
-                intent.putExtra("overview", movieList.get(position).overview);
-                intent.putExtra("poster", imageURL);
-                intent.putExtra("rilis", movieList.get(position).releaseDate);
-                intent.putExtra("nsfw", movieList.get(position).adult);
-                intent.putExtra("vote", movieList.get(position).voteAverage);
+                intent.putExtra("poster", movieList.get(position).getPosterPath());
                 mContext.startActivity(intent);
             }
         });

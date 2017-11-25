@@ -1,4 +1,4 @@
-package com.mr.rohmani.moviezamannow;
+package com.mr.rohmani.moviezamannow.models;
 
 /**
  * Created by USER on 19/11/2017.

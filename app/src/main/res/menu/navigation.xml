@@ -17,9 +17,5 @@
         android:id="@+id/nav_upcoming"
         android:icon="@drawable/ic_action_up"
         android:title="Upcoming" />
-    <item
-        android:id="@+id/nav_about"
-        android:icon="@drawable/ic_action_about"
-        android:title="About" />
 
 </menu>

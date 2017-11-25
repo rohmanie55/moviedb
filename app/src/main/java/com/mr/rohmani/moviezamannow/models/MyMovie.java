@@ -1,4 +1,4 @@
-package com.mr.rohmani.moviezamannow;
+package com.mr.rohmani.moviezamannow.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
