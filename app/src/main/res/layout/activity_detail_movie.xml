@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ededed"
     tools:context="com.mr.rohmani.moviezamannow.DetailMovie">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -29,71 +30,87 @@
                 android:layout_marginLeft="5dp"
                 android:textSize="30sp"/>
         </android.support.v7.widget.CardView>
-        <RelativeLayout
-            android:id="@+id/img"
-            android:layout_marginLeft="10dp"
+        <android.support.v7.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/card_view2"
+            android:layout_below="@id/card_view"
+            android:layout_gravity="center"
+            android:foreground="?attr/selectableItemBackground"
+            card_view:cardUseCompatPadding="true"
             android:layout_marginBottom="5dp"
-            android:layout_width="150dp"
-            android:background="@color/colorAccent"
-            android:layout_below="@id/card_view"
-            android:layout_height="200dp">
-            <ImageView
-                android:id="@+id/poster"
-                android:layout_width="150dp"
-                android:layout_height="200dp"
-                android:scaleType="fitXY"/>
-        </RelativeLayout>
-        <LinearLayout
-            android:id="@+id/desc"
-            android:layout_width="wrap_content"
-            android:orientation="vertical"
-            android:layout_toRightOf="@id/img"
-            android:layout_below="@id/card_view"
-            android:layout_marginLeft="10dp"
-            android:layout_height="200dp">
-            <TextView
-                android:id="@+id/rilis"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="30sp"
-                android:text="Rilis Date"/>
-            <TextView
-                android:id="@+id/duration"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:text="Durasi"/>
-            <TextView
-                android:id="@+id/rating"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:text="Ratting"/>
-            <TextView
-                android:id="@+id/company"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="17sp"
-                android:text="Company"/>
-            <TextView
-                android:id="@+id/genre"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="17sp"
-                android:text="Genre"/>
-        </LinearLayout>
-            <TextView
-                android:layout_marginLeft="5dp"
-                android:id="@+id/otherview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="17sp"
-                android:layout_below="@id/img"
-                android:text="Otherview"/>
+            card_view:cardCornerRadius="5dp">
+            <RelativeLayout
+                android:id="@+id/img"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="match_parent"
+                android:layout_below="@id/card_view"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/poster"
+                    android:layout_width="150dp"
+                    android:layout_height="200dp"
+                    android:background="@color/colorAccent"
+                    android:scaleType="fitXY"/>
+                <LinearLayout
+                    android:id="@+id/desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="200dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/poster"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/rilis"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Rilis Date"
+                        android:textSize="30sp" />
+
+                    <TextView
+                        android:id="@+id/duration"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Duration"
+                        android:textSize="17sp" />
+
+                    <TextView
+                        android:id="@+id/rating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ratting"
+                        android:textSize="17sp" />
+
+                    <TextView
+                        android:id="@+id/company"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Company"
+                        android:textSize="17sp" />
+
+                    <TextView
+                        android:id="@+id/genre"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Genre"
+                        android:textSize="17sp" />
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/otherview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/poster"
+                    android:text="Otherview"
+                    android:textSize="17sp" />
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycle_triler"
-            android:layout_below="@id/otherview"
+            android:layout_below="@id/card_view2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         </android.support.v7.widget.RecyclerView>

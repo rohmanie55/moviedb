@@ -1,18 +1,18 @@
 package com.mr.rohmani.moviezamannow.fragment;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.mr.rohmani.moviezamannow.ApiClient;
 import com.mr.rohmani.moviezamannow.Constants;
+import com.mr.rohmani.moviezamannow.R;
 import com.mr.rohmani.moviezamannow.adapter.MovieAdapter;
 import com.mr.rohmani.moviezamannow.models.MyMovie;
-import com.mr.rohmani.moviezamannow.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,7 @@ import retrofit2.Response;
  * Created by USER on 25/11/2017.
  */
 
-public class Upcoming extends Fragment {
+public class Upcoming extends Base {
     RecyclerView recyclerView;
 
     MovieAdapter adapter;
@@ -38,7 +38,7 @@ public class Upcoming extends Fragment {
         View rootView = inflater.inflate(R.layout.main_layout, container, false);
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycle);
-
+        showProgressDialog();
         listData();
 
         return rootView;
@@ -56,12 +56,14 @@ public class Upcoming extends Fragment {
                     adapter = new MovieAdapter(getActivity(), results);
                     recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
                     recyclerView.setAdapter(adapter);
+                    hideProgressDialog();
                 }
             }
 
             @Override
             public void onFailure(Call<MyMovie> call, Throwable t) {
-
+                hideProgressDialog();
+                Toast.makeText(getActivity(), "An Error occured please peload or check your conection",Toast.LENGTH_LONG).show();
             }
         });
     }
