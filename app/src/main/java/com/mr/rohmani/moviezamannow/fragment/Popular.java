@@ -6,7 +6,6 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.mr.rohmani.moviezamannow.ApiClient;
 import com.mr.rohmani.moviezamannow.Constants;
@@ -63,8 +62,7 @@ public class Popular extends Base {
 
             @Override
             public void onFailure(Call<MyMovie> call, Throwable t) {
-                hideProgressDialog();
-                Toast.makeText(getActivity(), "An Error occured please peload or check your conection",Toast.LENGTH_LONG).show();
+                hideProgressDialogToast();
             }
         });
     }
