@@ -8,14 +8,14 @@
     android:orientation="vertical"
     tools:context="com.mr.rohmani.moviezamannow.Main">
 
-    <FrameLayout
+    <RelativeLayout
         android:id="@+id/mylayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
 
 
-    </FrameLayout>
+    </RelativeLayout>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"

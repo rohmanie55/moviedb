@@ -1,7 +1,8 @@
 package com.mr.rohmani.moviezamannow.fragment;
 
-import android.app.Fragment;
+
 import android.app.ProgressDialog;
+import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
 /**
@@ -34,4 +35,5 @@ public class Base extends Fragment {
             Toast.makeText(getActivity(), "An Error occured please reload or check your conection",Toast.LENGTH_LONG).show();
         }
     }
+
 }
