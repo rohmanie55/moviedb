@@ -37,7 +37,7 @@ public class Upcoming extends Base {
         View rootView = inflater.inflate(R.layout.main_layout, container, false);
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycle);
-        showProgressDialog();
+        showProgressDialog("Loading..");
         listData();
 
         return rootView;
@@ -61,7 +61,8 @@ public class Upcoming extends Base {
 
             @Override
             public void onFailure(Call<MyMovie> call, Throwable t) {
-                hideProgressDialogToast();
+                hideProgressDialog();
+                showToast("an error occured plase check your internet connection!");
             }
         });
     }

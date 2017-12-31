@@ -6,12 +6,6 @@ package com.mr.rohmani.moviezamannow.models;
 
 public class MovieDB {
     public int id;
-
-    public MovieDB(int categori) {
-        this.categori = categori;
-    }
-
-    public int categori;
     public String title;
     public String rilis;
     public int duration;

@@ -10,7 +10,8 @@ import android.view.ViewGroup;
 import com.mr.rohmani.moviezamannow.ApiClient;
 import com.mr.rohmani.moviezamannow.Constants;
 import com.mr.rohmani.moviezamannow.R;
-import com.mr.rohmani.moviezamannow.adapter.MovieAdapter;
+import com.mr.rohmani.moviezamannow.adapter.DbMovieAdapter;
+import com.mr.rohmani.moviezamannow.models.MovieList;
 import com.mr.rohmani.moviezamannow.models.MyMovie;
 
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public class Popular extends Base {
 
     RecyclerView recyclerView;
 
-    MovieAdapter adapter;
+    DbMovieAdapter adapter;
 
     ApiClient apiClient;
     List<MyMovie.Result> results = new ArrayList<>();
@@ -38,7 +39,7 @@ public class Popular extends Base {
         View rootView = inflater.inflate(R.layout.main_layout, container, false);
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycle);
-        showProgressDialog();
+        showProgressDialog("Loading..");
         listData();
 
         return rootView;
@@ -53,16 +54,25 @@ public class Popular extends Base {
                 if (response.isSuccessful()) {
                     MyMovie movie = response.body();
                     results = movie.getResults();
-                    adapter = new MovieAdapter(getActivity(), results);
+                    updateDatabase(results, "popular");
+                    List<MovieList> moviedb = db.getAllMovie("popular");
+                    adapter = new DbMovieAdapter(getActivity(), moviedb);
                     recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
                     recyclerView.setAdapter(adapter);
-                    hideProgressDialog();
+
                 }
             }
 
             @Override
             public void onFailure(Call<MyMovie> call, Throwable t) {
-                hideProgressDialogToast();
+                initDatabase();
+                List<MovieList> moviedb = db.getAllMovie("popular");
+                System.out.print(moviedb);
+                adapter = new DbMovieAdapter(getActivity(), moviedb);
+                recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+                recyclerView.setAdapter(adapter);
+                hideProgressDialog();
+                showToast("an error occured plase check your internet connection!");
             }
         });
     }
