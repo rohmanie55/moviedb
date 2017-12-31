@@ -60,7 +60,8 @@ public class DbMovieAdapter extends RecyclerView.Adapter<DbMovieAdapter.MovieVie
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, DetailMovie.class);
-                intent.putExtra("id", movieList.get(position).mid);
+                intent.putExtra("id", Integer.parseInt(movieList.get(position).mid));
+                intent.putExtra("title", movieList.get(position).title);
                 intent.putExtra("poster", movieList.get(position).url);
                 mContext.startActivity(intent);
             }

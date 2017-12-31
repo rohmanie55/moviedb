@@ -3,9 +3,13 @@ package com.mr.rohmani.moviezamannow;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,38 +27,59 @@ import retrofit2.Response;
 
 public class DetailMovie extends AppCompatActivity {
 
-    TextView tvTitle, tvRilis, tvDuration, tvRating, tvCompany, tvGenre, tvOtherview;
-    ImageView imgPoster;
+    TextView tvTitle, tvDuration, tvRating, tvCompany, tvGenre, tvOtherview;
+    ImageView imgPoster, imageBanner;
     RecyclerView recyclerView;
     VideoAdapter adapter;
     ApiClient apiClient;
     private ProgressDialog mProgressDialog;
     public int id;
     public String poster;
+    public String title;
     public List<MyVideo.Result> results = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_movie);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.toolbarsize);
+        collapsingToolbarLayout.setExpandedTitleGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL);
+        collapsingToolbarLayout.setCollapsedTitleTextColor(
+                ContextCompat.getColor(this, R.color.white));
+        collapsingToolbarLayout.setExpandedTitleColor(
+                ContextCompat.getColor(this, R.color.white));
+
         recyclerView = (RecyclerView) findViewById(R.id.recycle_triler);
         tvTitle= (TextView) findViewById(R.id.title);
-        tvRilis= (TextView) findViewById(R.id.rilis);
         tvDuration= (TextView) findViewById(R.id.duration);
         tvRating= (TextView) findViewById(R.id.rating);
         tvCompany= (TextView) findViewById(R.id.company);
         tvGenre= (TextView) findViewById(R.id.genre);
         tvOtherview= (TextView) findViewById(R.id.otherview);
-        imgPoster= (ImageView) findViewById(R.id.poster);
-
+        imgPoster= (ImageView) findViewById(R.id.image2);
+        imageBanner = (ImageView) findViewById(R.id.image);
         Intent i = getIntent();
         if(i.getExtras()!=null){
             id = i.getIntExtra("id",0);
+            title = i.getStringExtra("title");
             poster = i.getStringExtra("poster");
+            collapsingToolbarLayout.setTitle(title);
         }
         showProgressDialog();
         listData();
         getDetails();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     private void listData() {
@@ -87,15 +112,16 @@ public class DetailMovie extends AppCompatActivity {
             public void onResponse(Call<MyMovieDetail> call, Response<MyMovieDetail> response) {
                 if (response.isSuccessful()) {
                     MyMovieDetail movie = response.body();
-                    tvTitle.setText(movie.getTitle());
-                    tvRilis.setText(movie.getReleaseDate().substring(0, 4));
-                    tvDuration.setText(String.valueOf(movie.getRuntime())+" Minutes");
+                    tvTitle.setText(movie.getReleaseDate().substring(0, 4));
+                    tvDuration.setText(String.valueOf(movie.getRuntime())+" M");
                     tvRating.setText(String.valueOf(movie.getVoteAverage())+"/10");
-                    tvCompany.setText("Company: "+movie.getProductionCompanies().get(0).getName());
-                    tvGenre.setText("Genre: "+getGenres(movie.getGenres()));
+                    tvCompany.setText(movie.getProductionCompanies().get(0).getName());
+                    tvGenre.setText(getGenres(movie.getGenres()));
                     tvOtherview.setText(movie.getOverview());
                     final String imageURL = "http://image.tmdb.org/t/p/w185/"+poster;
-                    Picasso.with(DetailMovie.this).load(imageURL).into(imgPoster);
+                    Picasso.with(DetailMovie.this).load(imageURL).resize(600, 400)
+                            .centerCrop().into(imageBanner);
+                    Picasso.with(DetailMovie.this).load(imageURL).fit().centerCrop().into(imgPoster);
                     hideProgressDialog();
                 }
             }

@@ -60,6 +60,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, DetailMovie.class);
                 intent.putExtra("id", movieList.get(position).id);
+                intent.putExtra("title", movieList.get(position).title);
                 intent.putExtra("poster", movieList.get(position).getPosterPath());
                 mContext.startActivity(intent);
             }
