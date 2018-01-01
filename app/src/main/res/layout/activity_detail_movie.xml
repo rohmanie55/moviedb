@@ -26,7 +26,7 @@
             android:fitsSystemWindows="true">
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="300dp">
+                android:layout_height="350dp">
                 <ImageView
                     android:id="@+id/image"
                     android:layout_width="match_parent"
@@ -39,10 +39,10 @@
                     android:background="@color/black"/>
                 <ImageView
                     android:id="@+id/image2"
-                    android:layout_width="140dp"
-                    android:layout_height="180dp"
+                    android:layout_width="200dp"
+                    android:layout_height="230dp"
                     android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true" />
+                    android:layout_centerVertical="true"/>
             </RelativeLayout>
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -62,56 +62,55 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:id="@+id/wraper"
+                android:layout_centerHorizontal="true"
+                android:layout_height="wrap_content">
                 <TextView
                     android:id="@+id/title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Year"
                     android:textAllCaps="true"
-                    android:textColor="@color/colorBlack"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginLeft="5dp"
-                    android:textSize="30sp"/>
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:id="@+id/wraper"
-                android:layout_below="@+id/title"
-                android:layout_centerHorizontal="true"
-                android:layout_height="wrap_content">
+                    android:paddingRight="10dp"
+                    android:textSize="25sp"/>
                 <TextView
                     android:id="@+id/duration"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
+                    android:layout_toRightOf="@+id/title"
                     android:paddingRight="10dp"
                     android:text="Duration"
-                    android:textSize="17sp" />
+                    android:textSize="25sp" />
 
                 <TextView
                     android:id="@+id/rating"
                     android:layout_toRightOf="@id/duration"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
                     android:text="Ratting"
-                    android:textSize="17sp" />
+                    android:textSize="25sp" />
             </RelativeLayout>
             <TextView
                 android:id="@+id/genre"
-                android:layout_centerHorizontal="true"
                 android:layout_below="@id/wraper"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Genre"
+                android:layout_centerHorizontal="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
                 android:textSize="17sp" />
             <TextView
                 android:id="@+id/company"
-                android:layout_centerHorizontal="true"
                 android:layout_below="@id/genre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Company"
+                android:layout_centerHorizontal="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
                 android:textSize="17sp" />
             <TextView
                 android:id="@+id/otherview"
@@ -120,6 +119,7 @@
                 android:layout_below="@id/company"
                 android:layout_marginRight="10dp"
                 android:layout_marginLeft="10dp"
+                android:layout_centerHorizontal="true"
                 android:text="Otherview"
                 android:textSize="17sp" />
             <android.support.v7.widget.RecyclerView
@@ -131,4 +131,5 @@
             </android.support.v7.widget.RecyclerView>
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
+
 </android.support.design.widget.CoordinatorLayout>

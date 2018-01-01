@@ -49,7 +49,7 @@ public class DetailMovie extends AppCompatActivity {
 
         CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.toolbarsize);
-        collapsingToolbarLayout.setExpandedTitleGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL);
+        collapsingToolbarLayout.setExpandedTitleGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL);
         collapsingToolbarLayout.setCollapsedTitleTextColor(
                 ContextCompat.getColor(this, R.color.white));
         collapsingToolbarLayout.setExpandedTitleColor(
@@ -115,11 +115,11 @@ public class DetailMovie extends AppCompatActivity {
                     tvTitle.setText(movie.getReleaseDate().substring(0, 4));
                     tvDuration.setText(String.valueOf(movie.getRuntime())+" M");
                     tvRating.setText(String.valueOf(movie.getVoteAverage())+"/10");
-                    tvCompany.setText(movie.getProductionCompanies().get(0).getName());
+                    tvCompany.setText(getCompany(movie.getProductionCompanies()));
                     tvGenre.setText(getGenres(movie.getGenres()));
                     tvOtherview.setText(movie.getOverview());
                     final String imageURL = "http://image.tmdb.org/t/p/w185/"+poster;
-                    Picasso.with(DetailMovie.this).load(imageURL).resize(600, 400)
+                    Picasso.with(DetailMovie.this).load(imageURL).fit()
                             .centerCrop().into(imageBanner);
                     Picasso.with(DetailMovie.this).load(imageURL).fit().centerCrop().into(imgPoster);
                     hideProgressDialog();
@@ -134,6 +134,16 @@ public class DetailMovie extends AppCompatActivity {
     }
 
     private String getGenres(List<MyMovieDetail.Genre> genre){
+        int i;
+        String result ="";
+        for (i=0;i<genre.size()-1;i++){
+            result = result+genre.get(i).getName()+", ";
+        }
+
+        return result;
+    }
+
+    private String getCompany(List<MyMovieDetail.ProductionCompany> genre){
         int i;
         String result ="";
         for (i=0;i<genre.size()-1;i++){
