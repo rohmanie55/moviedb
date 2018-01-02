@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.mr.rohmani.moviezamannow.DetailMovie;
 import com.mr.rohmani.moviezamannow.R;
@@ -36,9 +37,11 @@ public class DbMovieAdapter extends RecyclerView.Adapter<DbMovieAdapter.MovieVie
     public static class MovieViewHolder extends RecyclerView.ViewHolder {
         private ImageView ivPhoto;
         private RelativeLayout rl;
+        private TextView title;
         public MovieViewHolder(View itemView) {
             super(itemView);
             ivPhoto = (ImageView) itemView.findViewById(R.id.iv_photo);
+            title = (TextView) itemView.findViewById(R.id.titlemovie);
             rl = (RelativeLayout)itemView.findViewById(R.id.rl_movie);
         }
     }
@@ -56,6 +59,7 @@ public class DbMovieAdapter extends RecyclerView.Adapter<DbMovieAdapter.MovieVie
 
         Picasso.with(mContext).load(imageURL).fetch();
         Picasso.with(mContext).load(imageURL).into(holder.ivPhoto);
+        holder.title.setText(movieList.get(position).title);
         holder.rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

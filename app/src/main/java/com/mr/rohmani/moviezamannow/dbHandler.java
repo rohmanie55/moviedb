@@ -117,4 +117,20 @@ public class dbHandler extends SQLiteOpenHelper {
         }
         return movie;
     }
+
+    public List<MovieList> getBanner(){
+        List<MovieList> banner = new ArrayList<>();
+        String q = "SELECT mid, title, imgurl FROM "+TABLE_NAME2+" ORDER BY RANDOM() LIMIT 5";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(q, null);
+
+        if (cursor.moveToFirst()){
+            do {
+                MovieList story = new MovieList(cursor.getString(0),cursor.getString(1), cursor.getString(2));
+                banner.add(story);
+            } while (cursor.moveToNext());
+        }
+
+        return banner;
+    }
 }
