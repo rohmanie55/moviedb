@@ -13,9 +13,8 @@ public class MovieDB {
     public String company;
     public String genre;
     public String otherview;
-    public String imgurl;
 
-    public MovieDB(int id, String title, String rilis, int duration, double rating, String company, String genre, String otherview, String imgurl) {
+    public MovieDB(int id, String title, String rilis, int duration, double rating, String company, String genre, String otherview) {
         this.id = id;
         this.title = title;
         this.rilis = rilis;
@@ -24,7 +23,6 @@ public class MovieDB {
         this.company = company;
         this.genre = genre;
         this.otherview = otherview;
-        this.imgurl = imgurl;
     }
 
 }

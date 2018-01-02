@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.mr.rohmani.moviezamannow.models.MovieDB;
 import com.mr.rohmani.moviezamannow.models.MovieList;
+import com.mr.rohmani.moviezamannow.models.MyMovieDetail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +44,7 @@ public class dbHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String CREATE_USER_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "" +
                 "(id INTEGER PRIMARY KEY,"+TITLE+" TEXT,"+RILIS+" TEXT,"+DURATION+" INTEGER," +
-                RATING +" DOUBLE,"+COMPANY+" TEXT, "+GENRE+" TEXT, "+OTHERVIEW+" TEXT,"+IMG_URL+" TEXT" + ")";
+                RATING +" DOUBLE,"+COMPANY+" TEXT, "+GENRE+" TEXT, "+OTHERVIEW+" TEXT" + ")";
         String CREATE_USER_TABLE2 = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME2 + "" +
                 "(id INTEGER PRIMARY KEY AUTOINCREMENT,mid TEXT, categori TEXT,"+TITLE+" TEXT,"+IMG_URL+" TEXT" + ")";
 
@@ -59,19 +60,18 @@ public class dbHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void addMovieDetails(MovieDB movie){
+    public void addMovieDetails(MyMovieDetail movie){
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put("id", movie.id);
-        values.put(TITLE, movie.title);
-        values.put(RILIS, movie.rilis);
-        values.put(DURATION, movie.duration);
-        values.put(RATING, movie.rating);
-        values.put(COMPANY, movie.company);
-        values.put(GENRE, movie.genre);
-        values.put(OTHERVIEW, movie.otherview);
-        values.put(IMG_URL, movie.imgurl);
+        values.put("id", movie.getId());
+        values.put(TITLE, movie.getTitle());
+        values.put(RILIS, movie.getReleaseDate());
+        values.put(DURATION, movie.getRuntime());
+        values.put(RATING, movie.getVoteAverage());
+        values.put(COMPANY, getCompany(movie.getProductionCompanies()));
+        values.put(GENRE, getGenres(movie.getGenres()));
+        values.put(OTHERVIEW, movie.getOverview());
         // Inserting Row
         db.insert(TABLE_NAME, null, values);
         db.close(); // Closing database connection
@@ -118,19 +118,55 @@ public class dbHandler extends SQLiteOpenHelper {
         return movie;
     }
 
+    public MovieDB getMovieDetail(int id){
+        MovieDB movie = null;
+        String selectQuery = "SELECT * FROM " + TABLE_NAME +" WHERE id = '"+ id +"'";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()){
+            do {
+                movie = new MovieDB(cursor.getInt(0),cursor.getString(1), cursor.getString(2), cursor.getInt(3),
+                        cursor.getDouble(4), cursor.getString(5), cursor.getString(6), cursor.getString(7));
+            } while (cursor.moveToNext());
+        }
+        return movie;
+    }
+
+
     public List<MovieList> getBanner(){
         List<MovieList> banner = new ArrayList<>();
-        String q = "SELECT mid, title, imgurl FROM "+TABLE_NAME2+" ORDER BY RANDOM() LIMIT 5";
+        String q = "SELECT * FROM "+TABLE_NAME2+" ORDER BY RANDOM() LIMIT 5";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(q, null);
 
         if (cursor.moveToFirst()){
             do {
-                MovieList story = new MovieList(cursor.getString(0),cursor.getString(1), cursor.getString(2));
+                MovieList story = new MovieList(cursor.getString(1),cursor.getString(3), cursor.getString(4));
                 banner.add(story);
             } while (cursor.moveToNext());
         }
 
         return banner;
+    }
+
+    private String getGenres(List<MyMovieDetail.Genre> genre){
+        int i;
+        String result ="";
+        for (i=0;i<genre.size()-1;i++){
+            result = result+genre.get(i).getName()+", ";
+        }
+
+        return result;
+    }
+
+    private String getCompany(List<MyMovieDetail.ProductionCompany> genre){
+        int i;
+        String result ="";
+        for (i=0;i<genre.size()-1;i++){
+            result = result+genre.get(i).getName()+", ";
+        }
+
+        return result;
     }
 }

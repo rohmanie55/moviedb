@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mr.rohmani.moviezamannow.adapter.VideoAdapter;
+import com.mr.rohmani.moviezamannow.models.MovieDB;
 import com.mr.rohmani.moviezamannow.models.MyMovieDetail;
 import com.mr.rohmani.moviezamannow.models.MyVideo;
 import com.squareup.picasso.Picasso;
@@ -32,6 +33,7 @@ public class DetailMovie extends AppCompatActivity {
     RecyclerView recyclerView;
     VideoAdapter adapter;
     ApiClient apiClient;
+    public dbHandler db;
     private ProgressDialog mProgressDialog;
     public int id;
     public String poster;
@@ -41,6 +43,7 @@ public class DetailMovie extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_movie);
+        db = new dbHandler(DetailMovie.this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -112,12 +115,14 @@ public class DetailMovie extends AppCompatActivity {
             public void onResponse(Call<MyMovieDetail> call, Response<MyMovieDetail> response) {
                 if (response.isSuccessful()) {
                     MyMovieDetail movie = response.body();
-                    tvTitle.setText(movie.getReleaseDate().substring(0, 4));
-                    tvDuration.setText(String.valueOf(movie.getRuntime())+" M");
-                    tvRating.setText(String.valueOf(movie.getVoteAverage())+"/10");
-                    tvCompany.setText(getCompany(movie.getProductionCompanies()));
-                    tvGenre.setText(getGenres(movie.getGenres()));
-                    tvOtherview.setText(movie.getOverview());
+                    db.addMovieDetails(movie);
+                    MovieDB mdb = db.getMovieDetail(id);
+                    tvTitle.setText(mdb.rilis.substring(0, 4));
+                    tvDuration.setText(String.valueOf(mdb.duration)+" M");
+                    tvRating.setText(String.valueOf(mdb.rating)+"/10");
+                    tvCompany.setText(mdb.company);
+                    tvGenre.setText(mdb.genre);
+                    tvOtherview.setText(mdb.otherview);
                     final String imageURL = "http://image.tmdb.org/t/p/w185/"+poster;
                     Picasso.with(DetailMovie.this).load(imageURL).fit()
                             .centerCrop().into(imageBanner);
@@ -128,29 +133,24 @@ public class DetailMovie extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<MyMovieDetail> call, Throwable t) {
+                final String imageURL = "http://image.tmdb.org/t/p/w185/"+poster;
+                if (db.getMovieDetail(id)==null){
+                    tvCompany.setText("Data tidak ditemukan atau internet tidak tersedia");
+                }else{
+                    MovieDB mdb = db.getMovieDetail(id);
+                    tvTitle.setText(mdb.rilis.substring(0, 4));
+                    tvDuration.setText(String.valueOf(mdb.duration)+" M");
+                    tvRating.setText(String.valueOf(mdb.rating)+"/10");
+                    tvCompany.setText(mdb.company);
+                    tvGenre.setText(mdb.genre);
+                    tvOtherview.setText(mdb.otherview);
+                }
+                Picasso.with(DetailMovie.this).load(imageURL).fit()
+                        .centerCrop().into(imageBanner);
+                Picasso.with(DetailMovie.this).load(imageURL).fit().centerCrop().into(imgPoster);
                 hideProgressDialog();
             }
         });
-    }
-
-    private String getGenres(List<MyMovieDetail.Genre> genre){
-        int i;
-        String result ="";
-        for (i=0;i<genre.size()-1;i++){
-            result = result+genre.get(i).getName()+", ";
-        }
-
-        return result;
-    }
-
-    private String getCompany(List<MyMovieDetail.ProductionCompany> genre){
-        int i;
-        String result ="";
-        for (i=0;i<genre.size()-1;i++){
-            result = result+genre.get(i).getName()+", ";
-        }
-
-        return result;
     }
 
     //show progres dialog when btn login clicked
