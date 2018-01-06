@@ -19,7 +19,10 @@ import com.mr.rohmani.moviezamannow.models.MyMovieDetail;
 import com.mr.rohmani.moviezamannow.models.MyVideo;
 import com.squareup.picasso.Picasso;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -118,7 +121,7 @@ public class DetailMovie extends AppCompatActivity {
                     db.addMovieDetails(movie);
                     MovieDB mdb = db.getMovieDetail(id);
                     tvTitle.setText(mdb.rilis.substring(0, 4));
-                    tvDuration.setText(String.valueOf(mdb.duration)+" M");
+                    tvDuration.setText(getDuration(mdb.duration));
                     tvRating.setText(String.valueOf(mdb.rating)+"/10");
                     tvCompany.setText(mdb.company);
                     tvGenre.setText(mdb.genre);
@@ -139,7 +142,7 @@ public class DetailMovie extends AppCompatActivity {
                 }else{
                     MovieDB mdb = db.getMovieDetail(id);
                     tvTitle.setText(mdb.rilis.substring(0, 4));
-                    tvDuration.setText(String.valueOf(mdb.duration)+" M");
+                    tvDuration.setText(getDuration(mdb.duration));
                     tvRating.setText(String.valueOf(mdb.rating)+"/10");
                     tvCompany.setText(mdb.company);
                     tvGenre.setText(mdb.genre);
@@ -168,6 +171,20 @@ public class DetailMovie extends AppCompatActivity {
         if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.dismiss();
         }
+    }
+
+    private String getDuration(int time){
+        String result = "";
+        SimpleDateFormat sdf = new SimpleDateFormat("mm");
+        try {
+            Date dt = sdf.parse(String.valueOf(time));
+            sdf = new SimpleDateFormat("HH:mm");
+            result = sdf.format(dt);
+        } catch (ParseException e) {
+            e.printStackTrace();
+
+        }
+        return result;
     }
 
 }

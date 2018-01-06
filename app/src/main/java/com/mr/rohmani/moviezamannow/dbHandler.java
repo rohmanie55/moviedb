@@ -136,13 +136,13 @@ public class dbHandler extends SQLiteOpenHelper {
 
     public List<MovieList> getBanner(){
         List<MovieList> banner = new ArrayList<>();
-        String q = "SELECT * FROM "+TABLE_NAME2+" ORDER BY RANDOM() LIMIT 5";
+        String q = "SELECT mid, title, imgurl FROM "+TABLE_NAME2+" ORDER BY RANDOM() LIMIT 5";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(q, null);
 
         if (cursor.moveToFirst()){
             do {
-                MovieList story = new MovieList(cursor.getString(1),cursor.getString(3), cursor.getString(4));
+                MovieList story = new MovieList(cursor.getString(0),cursor.getString(1), cursor.getString(2));
                 banner.add(story);
             } while (cursor.moveToNext());
         }

@@ -73,7 +73,6 @@ public class Main extends AppCompatActivity {
         if (savedInstanceState == null) {
             fragmentClass = Popular.class;
             callFragment();
-            setTitle(R.string.title_popular);
         }
         List<MovieList> banner = db.getBanner();
         sliderLayout = (SliderLayout) findViewById(R.id.slider);
@@ -82,12 +81,12 @@ public class Main extends AppCompatActivity {
             // initialize a SliderLayout
             textSliderView
                     .description(banner.get(counter).title)
-                    .image("http://image.tmdb.org/t/p/w185/"+banner.get(counter).url)
+                    .image("http://image.tmdb.org/t/p/w185/" + banner.get(counter).url)
                     .setScaleType(BaseSliderView.ScaleType.CenterCrop);
             //add your extra information
             textSliderView.bundle(new Bundle());
             textSliderView.getBundle()
-                    .putString("extra",banner.get(counter).mid);
+                    .putString("extra", banner.get(counter).mid);
             sliderLayout.addSlider(textSliderView);
         }
         sliderLayout.setPresetTransformer(SliderLayout.Transformer.Accordion);

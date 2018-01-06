@@ -76,7 +76,6 @@
                     android:id="@+id/title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Year"
                     android:textAllCaps="true"
                     android:paddingRight="10dp"
                     android:textSize="25sp"/>
@@ -86,7 +85,6 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/title"
                     android:paddingRight="10dp"
-                    android:text="Duration"
                     android:textSize="25sp" />
 
                 <TextView
@@ -94,7 +92,6 @@
                     android:layout_toRightOf="@id/duration"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Ratting"
                     android:textSize="25sp" />
             </RelativeLayout>
             <TextView
@@ -102,7 +99,6 @@
                 android:layout_below="@id/wraper"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Genre"
                 android:layout_centerHorizontal="true"
                 android:textSize="17sp" />
             <TextView
@@ -110,7 +106,6 @@
                 android:layout_below="@id/genre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Company"
                 android:layout_centerHorizontal="true"
                 android:textSize="17sp" />
             <TextView
@@ -119,7 +114,6 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/company"
                 android:layout_centerHorizontal="true"
-                android:text="Otherview"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="20dp"
                 android:textSize="17sp" />

@@ -10,7 +10,8 @@ import android.view.ViewGroup;
 import com.mr.rohmani.moviezamannow.ApiClient;
 import com.mr.rohmani.moviezamannow.Constants;
 import com.mr.rohmani.moviezamannow.R;
-import com.mr.rohmani.moviezamannow.adapter.MovieAdapter;
+import com.mr.rohmani.moviezamannow.adapter.DbMovieAdapter;
+import com.mr.rohmani.moviezamannow.models.MovieList;
 import com.mr.rohmani.moviezamannow.models.MyMovie;
 
 import java.util.ArrayList;
@@ -25,9 +26,6 @@ import retrofit2.Response;
  */
 
 public class Top extends Base{
-    RecyclerView recyclerView;
-
-    MovieAdapter adapter;
 
     ApiClient apiClient;
     List<MyMovie.Result> results = new ArrayList<>();
@@ -37,13 +35,13 @@ public class Top extends Base{
         View rootView = inflater.inflate(R.layout.main_layout, container, false);
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycle);
-        showProgressDialog("Loading..");
         listData();
 
         return rootView;
     }
 
     private void listData() {
+        showProgressDialog("Update data..");
         apiClient = new ApiClient();
         Call<MyMovie> call = apiClient.getApiInterface().getMovieTop(Constants.API_KEY);
         call.enqueue(new Callback<MyMovie>() {
@@ -52,10 +50,7 @@ public class Top extends Base{
                 if (response.isSuccessful()) {
                     MyMovie movie = response.body();
                     results = movie.getResults();
-                    adapter = new MovieAdapter(getActivity(), results);
-                    recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-                    recyclerView.setAdapter(adapter);
-                    hideProgressDialog();
+                    updateDatabase(results, "top");
                 }
             }
 
@@ -65,5 +60,15 @@ public class Top extends Base{
                 showToast("an error occured plase check your internet connection!");
             }
         });
+
+        initDatabase();
+        List<MovieList> moviedb = db.getAllMovie("top");
+        adapter = new DbMovieAdapter(getActivity(), moviedb);
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        if (adapter!=null){
+            recyclerView.setAdapter(adapter);
+        }else {
+            showToast("Data is empty");
+        }
     }
 }
