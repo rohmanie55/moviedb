@@ -7,7 +7,7 @@ package com.mr.rohmani.moviezamannow;
 public class Constants {
 
     public static final String BASE_URL = "https://api.themoviedb.org/3/movie/";
-    public static final String API_KEY = "0f65dde119855bacffcb21f062a543d5";
+    public static final String API_KEY = "";//your token here
 
 
 }
